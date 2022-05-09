@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasMany(models.Lobby, {
+      this.hasMany(models.Player, {
         foreignKey: 'userId'
       });
       // We're leaving all trophies relations unavailable for now
