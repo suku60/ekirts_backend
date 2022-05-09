@@ -1,11 +1,9 @@
 const router = require('express').Router();
 
-// const UsersRouter = require('./views/UsersRouter');
-// const MoviesRouter = require('./views/MoviesRouter');
-// const OrdersRouter = require('./views/OrdersRouter');
+const UsersRouter = require('./views/UsersRouter');
+const LobbiesRouter = require('./views/LobbiesRouter');
 
-// router.use('/users', UsersRouter);
-// router.use('/movies', MoviesRouter);
-// router.use('/orders', OrdersRouter);
+router.use('/users', UsersRouter);
+router.use('/movies', LobbiesRouter);
 
 module.exports = router;
