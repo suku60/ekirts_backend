@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Player, {
         foreignKey: 'lobbyId'
       });
+      this.hasOne(models.User, {
+        foreignKey: 'lobbyId'
+      });
     }
   }
   Lobby.init({
@@ -21,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     ownerId: DataTypes.INTEGER,
     privateGame: DataTypes.BOOLEAN,
     playersSize: DataTypes.INTEGER,
-    turnTimer: DataTypes.INTEGER,
-    maxMinutesDuration: DataTypes.INTEGER
+    turnSecondsTimer: DataTypes.INTEGER,
+    gameMaxMinutesTimer: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Lobby',

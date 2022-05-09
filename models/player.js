@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   Player.init({
     playerColor: DataTypes.STRING,
     userId: DataTypes.INTEGER,
-    LobbyId: DataTypes.INTEGER
+    lobbyId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Player',

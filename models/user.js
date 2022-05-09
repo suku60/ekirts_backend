@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Player, {
         foreignKey: 'userId'
       });
+      this.hasMany(models.Lobby, {
+        foreignKey: 'userId'
+      });
       // We're leaving all trophies relations unavailable for now
       // this.hasMany(models.Trophy, {
       //   foreignKey: 'userId'
