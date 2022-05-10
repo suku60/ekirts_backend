@@ -29,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     username: DataTypes.STRING,
     password: DataTypes.STRING,
+    banned: DataTypes.BOOLEAN,
+    lobbyCreationRestricted: DataTypes.BOOLEAN,
     adminAccess: DataTypes.BOOLEAN,
     adminUser: DataTypes.BOOLEAN
   }, {

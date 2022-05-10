@@ -17,7 +17,8 @@ router.get('/find/:pk', auth, UsersController.findUserById);
 router.get('/find/:username', auth, UsersController.findUserByUsername);
 
 // update users
-router.post('/update/:pk', auth, UsersController.updateUserById);
+router.put('/update/:pk', auth, UsersController.updateUserById);
+router.put('/update/status/:username', auth, adminAccess, UsersController.updateUserStatus);
 
 // delete user
 router.delete('/delete/:pk', auth, UsersController.deleteUserById);

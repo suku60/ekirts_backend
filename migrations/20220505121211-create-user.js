@@ -35,6 +35,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      banned: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      lobbyCreationRestricted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
       adminAccess: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,

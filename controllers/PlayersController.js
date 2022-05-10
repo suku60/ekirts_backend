@@ -13,53 +13,23 @@ PlayersController.createPlayer = (req, res) => {
 
     try {
 
-        let email = req.body.email;
+        let playerColor = req.body.playerColor;
+        let userId = req.body.userId;
+        let lobbyId = req.body.lobbyId; 
         let username = req.body.username;
-        let birthdate = req.body.birthdate; 
-        if (!req.body.password) {
-            let error = new Error("Player must choose a password")
-            throw error;
-        }
-        let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
+        let lobbyName = req.body.lobbyName;
+       
+        Player.create({
+            playerColor: playerColor,
+            userId: userId,
+            lobbyId: lobbyId
+        }).then(player => {
+            res.status(201).json({ msg: `${username} has joined ${lobbyName}`, player: player });
+        }).catch(err => res.status(400).json({ msg: "Error joining when connecting to database", error: { name: err.name, message: err.message, detail: error } }));
 
-        Player.findAll({
-            where: {
-
-                [Op.or]: [
-                    {
-                        email: {
-                            [Op.like]: email
-                        }
-                    },
-                    {
-                        username: {
-                            [Op.like]: username
-                        }
-                    }
-                ]
-
-            }
-
-        }).then(usersEqEmailPlayername => {
-
-            if (usersEqEmailPlayername == 0) {
-
-                Player.create({
-                    email: email,
-                    username: username,
-                    birthdate: birthdate,
-                    password: password
-                }).then(user => {
-                    res.status(201).json({ msg: `${user.username} has joined the game`, user: user });
-                }).catch(err => res.status(400).json({ msg: "Player creation failed when connecting to database", error: { name: err.name, message: err.message, detail: error } }));
-
-            } else {
-                res.status(200).json({ msg: "Playername or email already in use" });
-            }
-        });
 
     } catch (error) {
-        res.status(422).json({ msg: "Player creation failed.", error: { name: error.name, message: error.message, detail: error } });
+        res.status(422).json({ msg: "Unable to join game.", error: { name: error.name, message: error.message, detail: error } });
     }
 }
 
@@ -74,9 +44,9 @@ PlayersController.findPlayerById = (req, res) => {
     }
 }
 
-PlayersController.findPlayerByPlayername = (req, res) => {
+PlayersController.findPlayerByLobbyId = (req, res) => {
     try {
-        Player.findOne({ where: { username: req.body.username } })
+        Player.findOne({ where: { lobbyId: req.body.lobbyId } })
             .then(data => {
                 res.send(data);
             });
@@ -95,10 +65,10 @@ PlayersController.updatePlayerById = async (req, res) => {
             where: { id: id }
         }).then(updatedPlayer => {
             res.status(200).json({ msg: `Player id: ${id} has been updated`, user: updatedPlayer });
-        }).catch(error => res.status(404).json({ msg: `There's been an error updating user id:${id}` , error: { name: error.name, message: error.message, detail: error } }));
+        }).catch(error => res.status(404).json({ msg: `There's been an error updating player id:${id}` , error: { name: error.name, message: error.message, detail: error } }));
 
     } catch (error) {
-        res.status(422).json({ msg: "You're unauthorized to update this user's data", error: { name: error.name, message: error.message, detail: error } });
+        res.status(422).json({ msg: "You're unauthorized to update this player's data", error: { name: error.name, message: error.message, detail: error } });
     }
 }
 
