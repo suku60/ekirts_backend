@@ -25,10 +25,15 @@ module.exports = {
         allowNull: false,
         defaultValue: false,
       },
-      active: {
+      inactive: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue: true,
+        defaultValue: false,
+      },
+      full: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
       playersSize: {
         type: Sequelize.INTEGER,

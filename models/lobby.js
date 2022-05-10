@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     lobbyName: DataTypes.STRING,
     ownerId: DataTypes.INTEGER,
     privateGame: DataTypes.BOOLEAN,
-    active: DataTypes.BOOLEAN,
+    inactive: DataTypes.BOOLEAN,
+    full: DataTypes.BOOLEAN,
     playersSize: DataTypes.INTEGER,
     turnSecondsTimer: DataTypes.INTEGER,
     gameMaxMinutesTimer: DataTypes.INTEGER
