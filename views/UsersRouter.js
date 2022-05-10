@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-// const auth = require('../middlewares/auth');
-// const adminAccess = require('../middlewares/adminAcess');
+const auth = require('../middlewares/auth');
+const adminAccess = require('../middlewares/adminAcess');
 
-// const UsersController = require('../controllers/UsersController');
+const UsersController = require('../controllers/UsersController');
 
 // USERS CRUD
 // login user
@@ -20,7 +20,7 @@ router.get('/find/:username', auth, UsersController.findUserByUsername);
 router.post('/update/:pk', auth, UsersController.updateUserById);
 
 // delete user
-// router.delete('/delete/:pk', auth, UsersController.deleteUserById);
+router.delete('/delete/:pk', auth, UsersController.deleteUserById);
 
 
 module.exports = router;
