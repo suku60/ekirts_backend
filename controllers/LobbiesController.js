@@ -9,17 +9,13 @@ const { Op } = require('sequelize');
 const LobbiesController = {};
 
 LobbiesController.createLobby = (req, res) => {
+    
+    let body = req.body;
 
-    try {
+    let token = req.headers.authorization.split(' ')[1];
+    let { user } = jwt.decode(token, authConfig.secret);
+    let userId = user.id
 
-        let ownerId = req.body.ownerId;
-        let lobbyName = req.body.lobbyName;
-        let privateGame = req.body.privateGame; 
-        let active = req.body.active; 
-        let playersSize = req.body.playersSize; 
-        let turnSecondsTimer = req.body.turnSecondsTimer; 
-        let gameMaxMinutesTimes = req.body.gameMaxMinutesTimes; 
-       
         Lobby.findAll({
             where: {
 
@@ -38,13 +34,10 @@ LobbiesController.createLobby = (req, res) => {
             if (lobbiesWithSameLobbyName == 0) {
 
                 Lobby.create({
-                    ownerId: ownerId,
-                    lobbyName: lobbyName,
-                    privateGame: privateGame,
-                    active: active,
-                    playersSize: playersSize,
-                    turnSecondsTimer: turnSecondsTimer,
-                    gameMaxMinutesTimes: gameMaxMinutesTimes
+                    lobbyName: body.lobbyName,
+                    playersSize: body.playersSize,
+                    turnSecondsTimer: body.turnSecondsTimer,
+                    gameMaxMinutesTimes: body.gameMaxMinutesTimes
                 }).then(lobby => {
                     res.status(201).json({ msg: `${lobby.lobbyName} lobby has been created`, lobby: lobby });
                 }).catch(err => res.status(400).json({ msg: "Lobby creation failed when connecting to database", error: { name: err.name, message: err.message, detail: error } }));
@@ -53,10 +46,6 @@ LobbiesController.createLobby = (req, res) => {
                 res.status(200).json({ msg: "Lobbyname already in use" });
             }
         });
-
-    } catch (error) {
-        res.status(422).json({ msg: "Lobby creation failed.", error: { name: error.name, message: error.message, detail: error } });
-    }
 }
 
 // we're doing an update to lobby when it is full

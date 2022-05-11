@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Lobby.init({
     lobbyName: DataTypes.STRING,
-    ownerId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     privateGame: DataTypes.BOOLEAN,
     inactive: DataTypes.BOOLEAN,
     full: DataTypes.BOOLEAN,

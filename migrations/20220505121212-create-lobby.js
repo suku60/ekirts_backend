@@ -12,13 +12,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      ownerId: {
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Users',
           key: 'id'
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       privateGame: {
         type: Sequelize.BOOLEAN,
@@ -37,23 +39,26 @@ module.exports = {
       },
       playersSize: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         defaultValue: 4,
       },
       turnSecondsTimer: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         defaultValue: 8,
       },
       gameMaxMinutesTimer: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         defaultValue: 30,
       },
       createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       }
     });
   },
