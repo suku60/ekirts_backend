@@ -11,10 +11,11 @@ const LobbiesController = {};
 LobbiesController.createLobby = (req, res) => {
     
     let body = req.body;
+    let lobbyName = req.body.lobbyName;
 
     let token = req.headers.authorization.split(' ')[1];
     let { user } = jwt.decode(token, authConfig.secret);
-    let userId = user.id
+    let userId = req.body.userId
 
         Lobby.findAll({
             where: {
@@ -34,7 +35,8 @@ LobbiesController.createLobby = (req, res) => {
             if (lobbiesWithSameLobbyName == 0) {
 
                 Lobby.create({
-                    lobbyName: body.lobbyName,
+                    lobbyName: lobbyName,
+                    userId: userId,
                     playersSize: body.playersSize,
                     turnSecondsTimer: body.turnSecondsTimer,
                     gameMaxMinutesTimes: body.gameMaxMinutesTimes
