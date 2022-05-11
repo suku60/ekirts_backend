@@ -17,10 +17,6 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
-      trophies: {
-        type: Sequelize.INTEGER,
-        allowNull: true
-      },
       email: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -35,21 +31,30 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      trophies: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+      },
       banned: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
+        allowNull: false,
       },
       lobbyCreationRestricted: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
+        allowNull: false,
       },
       adminAccess: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
+        allowNull: false,
       },
       adminUser: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

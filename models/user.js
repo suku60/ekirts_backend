@@ -25,10 +25,10 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     name: DataTypes.STRING,
     birthdate: DataTypes.DATE,
-    trophies: DataTypes.INTEGER,
     email: DataTypes.STRING,
     username: DataTypes.STRING,
     password: DataTypes.STRING,
+    trophies: DataTypes.INTEGER,
     banned: DataTypes.BOOLEAN,
     lobbyCreationRestricted: DataTypes.BOOLEAN,
     adminAccess: DataTypes.BOOLEAN,

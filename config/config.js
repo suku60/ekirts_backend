@@ -4,21 +4,21 @@ module.exports = {
   "development": {
     "username": "root",
     "password": "1234",
-    "database": "videoclub_2022",
+    "database": "ekirts_backend",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "admin_test",
     "password": "1234",
-    "database": "videoclub_2022_test",
+    "database": "ekirts_backend_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "admin_production",
     "password": "1234",
-    "database": "videoclub_2022_production",
+    "database": "ekirts_backend_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }

@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Player, {
         foreignKey: 'lobbyId'
       });
-      this.hasOne(models.User, {
-        foreignKey: 'lobbyId'
+      this.belongsTo(models.User, {
+        foreignKey: 'userId'
       });
     }
   }
