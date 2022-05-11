@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth');
-const adminAccess = require('../middlewares/adminAcess');
+const adminAccess = require('../middlewares/AdminAccess');
 
 const UsersController = require('../controllers/UsersController');
 
@@ -18,7 +18,7 @@ router.get('/find/:username', auth, UsersController.findUserByUsername);
 
 // update users
 router.put('/update/:pk', auth, UsersController.updateUserById);
-router.put('/update/status/:username', auth, adminAccess, UsersController.updateUserStatus);
+// router.put('/update/status/:username', auth, adminAccess, UsersController.updateUserStatus);
 
 // delete user
 router.delete('/delete/:pk', auth, UsersController.deleteUserById);
