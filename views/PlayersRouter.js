@@ -7,7 +7,7 @@ const PlayersController = require('../controllers/PlayersController');
 
 // PLAYERS CRUD
 // create player
-router.post('/create', auth, PlayersController.createPlayer);
+router.post('/create', PlayersController.createPlayer);
 
 // read players
 router.get('/find/:pk', auth, PlayersController.findPlayerById);

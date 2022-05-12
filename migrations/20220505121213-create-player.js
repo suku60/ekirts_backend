@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       playerColor: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       lobbyId: {
         type: Sequelize.INTEGER,

@@ -7,7 +7,7 @@ const LobbiesController = require('../controllers/LobbiesController');
 
 // LOBBIES CRUD
 // create lobby
-router.post('/create', LobbiesController.createLobby);
+router.post('/create', auth, LobbiesController.createLobby);
 
 // read lobbies
 router.get('/find/:pk', auth, LobbiesController.findLobbyById);

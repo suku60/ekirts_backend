@@ -42,7 +42,7 @@ LobbiesController.createLobby = (req, res) => {
                     gameMaxMinutesTimes: body.gameMaxMinutesTimes
                 }).then(lobby => {
                     res.status(201).json({ msg: `${lobby.lobbyName} lobby has been created`, lobby: lobby });
-                }).catch(err => res.status(400).json({ msg: "Lobby creation failed when connecting to database", error: { name: err.name, message: err.message, detail: error } }));
+                }).catch(err => res.status(400).json({ msg: "Lobby creation failed when connecting to database. User may be trying to create a lobby without relation to himself.", error: { name: err.name, message: err.message, detail: error } }));
 
             } else {
                 res.status(200).json({ msg: "Lobbyname already in use" });

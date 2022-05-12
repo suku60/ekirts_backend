@@ -14,10 +14,10 @@ PlayersController.createPlayer = (req, res) => {
     try {
 
         let playerColor = req.body.playerColor;
+        // userId&lobby will be here with params
         let userId = req.body.userId;
         let lobbyId = req.body.lobbyId; 
         let username = req.body.username;
-        let lobbyName = req.body.lobbyName;
        
         Player.create({
             playerColor: playerColor,
