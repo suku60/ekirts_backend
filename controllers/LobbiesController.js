@@ -77,6 +77,7 @@ LobbiesController.findLobbyByOwnerId = (req, res) => {
 LobbiesController.findActiveLobbies = (req, res) => {
     try {
         Lobby.findOne({ where: { inactive: false } })
+        
             .then(data => {
                 res.send(data);
             });
@@ -85,15 +86,27 @@ LobbiesController.findActiveLobbies = (req, res) => {
     }
 }
 
-LobbiesController.findAvailableLobbies = (req, res) => {
-    try {
-        Lobby.findOne({ where: { full: false } })
-            .then(data => {
-                res.send(data);
-            });
-    } catch (err) {
-        res.send(err)
-    }
+LobbiesController.findAvailableLobbies = async (req, res) => {
+    Lobby.findAll({
+        where: {
+            [Op.not]: [
+                {
+                    full: {
+                        [Op.like]: 0
+                    }
+                }
+            ]
+        }
+    })
+    .then(availableLobbies => {
+        if (availableLobbies != 0) {
+            res.send(availableLobbies);
+        } else {
+            res.send("There are no available lobbies");
+        }
+    }).catch(error => {
+        res.status(500).json({ msg: 'There has been an error', error})
+    })
 }
 
 LobbiesController.updateLobbyById = async (req, res) => {

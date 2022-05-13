@@ -30,7 +30,6 @@ UsersController.logUser = (req, res) => {
                 });
 
                 res.status(200).json({
-                    message: "Welcome "+user.username,
                     user: user,
                     token: token
                 })
