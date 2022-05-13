@@ -14,14 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Player, {
         foreignKey: 'lobbyId'
       });
-      this.belongsTo(models.User, {
-        foreignKey: 'userId'
-      });
     }
   }
   Lobby.init({
     lobbyName: DataTypes.STRING,
-    userId: DataTypes.INTEGER,
+    ownerId: DataTypes.INTEGER,
     privateGame: DataTypes.BOOLEAN,
     inactive: DataTypes.BOOLEAN,
     full: DataTypes.BOOLEAN,
