@@ -15,7 +15,7 @@ LobbiesController.createLobby = (req, res) => {
 
     let token = req.headers.authorization.split(' ')[1];
     let { user } = jwt.decode(token, authConfig.secret);
-    let userId = req.body.userId
+    let ownerId = req.body.ownerId
 
         Lobby.findAll({
             where: {
@@ -36,7 +36,7 @@ LobbiesController.createLobby = (req, res) => {
 
                 Lobby.create({
                     lobbyName: lobbyName,
-                    userId: userId,
+                    ownerId: ownerId,
                     playersSize: body.playersSize,
                     turnSecondsTimer: body.turnSecondsTimer,
                     gameMaxMinutesTimes: body.gameMaxMinutesTimes
