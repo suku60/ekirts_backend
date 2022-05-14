@@ -12,8 +12,6 @@ const PlayersController = {};
 PlayersController.createPlayer = (req, res) => {
     let body = req.body;
 
-    console.log("this is the body:", body)
-
     try {
         Player.findAll({
             where: {
