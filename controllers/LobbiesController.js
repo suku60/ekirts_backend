@@ -95,7 +95,7 @@ LobbiesController.findAvailableLobbies = async (req, res) => {
             where: {
                 [Op.and]: [
                     {
-                        full: {
+                        privateGame: {
                             [Op.like]: 0
                         }
                     },
@@ -107,6 +107,7 @@ LobbiesController.findAvailableLobbies = async (req, res) => {
                 ]
             }
         }).then(data => {
+            console.log("data we send as available:", data)
                 res.send(data);
             });
     } catch (err) {
