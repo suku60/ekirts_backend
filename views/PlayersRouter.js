@@ -15,7 +15,7 @@ router.get('/find/lobby/:lobbyId', auth, PlayersController.findPlayerByLobbyId);
 router.get('/find/user/:userId', auth, PlayersController.findPlayerByUserId);
 
 // update players
-router.put('/update/:pk', auth, adminAccess, PlayersController.updatePlayerById);
+router.put('/update/:pk', auth, PlayersController.updatePlayerById);
 
 // delete player
 router.delete('/delete/:pk', auth, PlayersController.deletePlayerById);
