@@ -12,6 +12,8 @@ const PlayersController = {};
 PlayersController.createPlayer = (req, res) => {
     let body = req.body;
 
+    console.log("this is the body:", body)
+
     try {
         Player.findAll({
             where: {
@@ -28,20 +30,22 @@ PlayersController.createPlayer = (req, res) => {
                     }
                 ]
             }
-        }).then(data => {
+        }).then(player => {
 
-            console.log("this is the data", typeof(data), data)
+            console.log("this is the data", typeof(player), player, player.length)
 
-            if(data !== {} ){
+            if(player.length !== 0 ){
                 res.send('User has already joined this lobby')
             }else{
+                console.log("we're creating...", body.playerColor, "lobbyId:",body.lobbyId, "userid:",body.userId)
                 Player.create({
+                    
                     playerColor: body.playerColor,
                     lobbyId: body.lobbyId,
                     userId: body.userId
                 }).then(player => {
                     if (player) {
-                        res.send(`user id:${userId} has joined lobby id:${lobbyId}`, player)
+                        res.send(player)
                     } else {
                         res.status(500).json({ msg: `User wasn't able to join this lobby` });
                     }
