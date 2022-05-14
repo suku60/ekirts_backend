@@ -10,27 +10,50 @@ const PlayersController = {};
 
 
 PlayersController.createPlayer = (req, res) => {
+    let body = req.body;
 
     try {
+        Player.findAll({
+            where: {
+                [Op.and]: [
+                    {
+                        lobbyId: {
+                            [Op.like]: body.lobbyId
+                        }
+                    },
+                    {
+                        userId: {
+                            [Op.like]: body.userId
+                        }
+                    }
+                ]
+            }
+        }).then(data => {
 
-        let playerColor = req.body.playerColor;
-        // userId&lobby will be here with params
-        let userId = req.body.userId;
-        let lobbyId = req.body.lobbyId; 
-        let username = req.body.username;
-       
-        Player.create({
-            playerColor: playerColor,
-            userId: userId,
-            lobbyId: lobbyId
-        }).then(player => {
-            res.status(201).json({ msg: `${username} has joined ${lobbyName}`, player: player });
-        }).catch(err => res.status(400).json({ msg: "Error joining when connecting to database", error: { name: err.name, message: err.message, detail: error } }));
+            console.log("this is the data", typeof(data), data)
 
-
-    } catch (error) {
-        res.status(422).json({ msg: "Unable to join game.", error: { name: error.name, message: error.message, detail: error } });
+            if(data !== {} ){
+                res.send('User has already joined this lobby')
+            }else{
+                Player.create({
+                    playerColor: body.playerColor,
+                    lobbyId: body.lobbyId,
+                    userId: body.userId
+                }).then(player => {
+                    if (player) {
+                        res.send(`user id:${userId} has joined lobby id:${lobbyId}`, player)
+                    } else {
+                        res.status(500).json({ msg: `User wasn't able to join this lobby` });
+                    }
+                })
+            }
+                
+            });
+    } catch (err) {
+        res.send(err)
     }
+
+    
 }
 
 PlayersController.findPlayerById = (req, res) => {

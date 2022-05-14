@@ -100,12 +100,12 @@ UsersController.createUser = (req, res) => {
 
 UsersController.findUserById = (req, res) => {
     try {
-        User.findOne({ where: { id: req.body.id } })
+        User.findByPk(req.params.pk)
             .then(data => {
-                res.send(data);
+                res.send(data)
             });
     } catch (err) {
-        res.send(err)
+        res.send(err);
     }
 }
 

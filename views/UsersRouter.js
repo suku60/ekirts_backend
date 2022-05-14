@@ -14,14 +14,14 @@ router.post('/create', UsersController.createUser);
 
 // read users
 router.get('/find/:pk', auth, UsersController.findUserById);
-router.get('/find/:username', auth, UsersController.findUserByUsername);
+router.get('/find', auth, UsersController.findUserByUsername);
 
 // update users
 router.put('/update/:pk', auth, UsersController.updateUserById);
 // router.put('/update/status/:username', auth, adminAccess, UsersController.updateUserStatus);
 
 // delete user
-router.delete('/delete/:pk', auth, UsersController.deleteUserById);
+router.delete('/delete/:pk', auth, adminAccess, UsersController.deleteUserById);
 
 
 module.exports = router;

@@ -12,11 +12,11 @@ router.post('/create', auth, LobbiesController.createLobby);
 // read lobbies
 router.get('/find/:pk', auth, LobbiesController.findLobbyById);
 router.get('/find/owner/:pk', auth, LobbiesController.findLobbyByOwnerId);
-router.get('/find/active', auth, LobbiesController.findActiveLobbies);
-router.get('/find/available', auth, LobbiesController.findAvailableLobbies);
+router.get('/findActive', auth, LobbiesController.findActiveLobbies);
+router.get('/findAvailable', auth, LobbiesController.findAvailableLobbies);
 
 // update lobbies
-router.post('/update/:pk', auth, LobbiesController.updateLobbyById);
+router.put('/update/:pk', auth, LobbiesController.updateLobbyById);
 
 // delete lobby
 router.delete('/delete/:pk', auth, adminAccess, LobbiesController.deleteLobbyById);

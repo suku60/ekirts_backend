@@ -54,18 +54,20 @@ LobbiesController.createLobby = (req, res) => {
 
 LobbiesController.findLobbyById = (req, res) => {
     try {
-        Lobby.findOne({ where: { id: req.body.id } })
+        Lobby.findByPk(req.params.pk)
             .then(data => {
-                res.send(data);
-            });
+                    res.status(200).json(data);}
+            );
     } catch (err) {
-        res.send(err)
+        res.send(err);
     }
 }
 
 LobbiesController.findLobbyByOwnerId = (req, res) => {
+
+    let ownerId = req.params.pk
     try {
-        Lobby.findOne({ where: { ownerId: req.body.id } })
+        Lobby.findAll({ where: { ownerId: ownerId } })
             .then(data => {
                 res.send(data);
             });
@@ -76,7 +78,7 @@ LobbiesController.findLobbyByOwnerId = (req, res) => {
 
 LobbiesController.findActiveLobbies = (req, res) => {
     try {
-        Lobby.findOne({ where: { inactive: false } })
+        Lobby.findAll({ where: { inactive: 0 } })
         
             .then(data => {
                 res.send(data);
@@ -87,26 +89,29 @@ LobbiesController.findActiveLobbies = (req, res) => {
 }
 
 LobbiesController.findAvailableLobbies = async (req, res) => {
-    Lobby.findAll({
-        where: {
-            [Op.not]: [
-                {
-                    full: {
-                        [Op.like]: 0
+
+    try {
+        Lobby.findAll({
+            where: {
+                [Op.and]: [
+                    {
+                        full: {
+                            [Op.like]: 0
+                        }
+                    },
+                    {
+                        inactive: {
+                            [Op.like]: 0
+                        }
                     }
-                }
-            ]
-        }
-    })
-    .then(availableLobbies => {
-        if (availableLobbies != 0) {
-            res.send(availableLobbies);
-        } else {
-            res.send("There are no available lobbies");
-        }
-    }).catch(error => {
-        res.status(500).json({ msg: 'There has been an error', error})
-    })
+                ]
+            }
+        }).then(data => {
+                res.send(data);
+            });
+    } catch (err) {
+        res.send(err)
+    }
 }
 
 LobbiesController.updateLobbyById = async (req, res) => {
