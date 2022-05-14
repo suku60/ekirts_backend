@@ -11,7 +11,8 @@ router.post('/create', PlayersController.createPlayer);
 
 // read players
 router.get('/find/:pk', auth, PlayersController.findPlayerById);
-router.get('/find/lobby/:pk', auth, PlayersController.findPlayerByLobbyId);
+router.get('/find/lobby/:lobbyId', auth, PlayersController.findPlayerByLobbyId);
+router.get('/find/user/:userId', auth, PlayersController.findPlayerByUserId);
 
 // update players
 router.put('/update/:pk', auth, adminAccess, PlayersController.updatePlayerById);
