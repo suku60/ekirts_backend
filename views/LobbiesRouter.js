@@ -1,42 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth');
-const adminAccess = require('../middlewares/AdminAccess');
+const adminAccess = require('../middlewares/adminAccess');
 
 const LobbiesController = require('../controllers/LobbiesController');
 
 // LOBBIES CRUD
 // create lobby
-// router.post('/create', auth, LobbiesController.createLobby);
-
-// // read lobbies
-// router.get('/find/:pk', auth, LobbiesController.findLobbyById);
-// router.get('/find/owner/:pk', auth, LobbiesController.findLobbyByOwnerId);
-// router.get('/findActive', auth, LobbiesController.findActiveLobbies);
-// router.get('/findAvailable', auth, LobbiesController.findAvailableLobbies);
-
-// // update lobbies
-// router.put('/update/:pk', auth, LobbiesController.updateLobbyById);
-
-// // delete lobby
-// router.delete('/delete/:pk', auth, adminAccess, LobbiesController.deleteLobbyById);
-
-
-// NO AUTH ENDPOINTS TEMPORATY FOR FRONT-WORK
-// create lobby
-router.post('/create', LobbiesController.createLobby);
+router.post('/create', auth, LobbiesController.createLobby);
 
 // read lobbies
-router.get('/find/:pk', LobbiesController.findLobbyById);
-router.get('/find/owner/:pk', LobbiesController.findLobbyByOwnerId);
-router.get('/findActive', LobbiesController.findActiveLobbies);
-router.get('/findAvailable', LobbiesController.findAvailableLobbies);
+router.get('/find/:pk', auth, LobbiesController.findLobbyById);
+router.get('/find/owner/:pk', auth, LobbiesController.findLobbyByOwnerId);
+router.get('/findActive', auth, LobbiesController.findActiveLobbies);
+router.get('/findAvailable', auth, LobbiesController.findAvailableLobbies);
 
 // update lobbies
-router.put('/update/:pk', LobbiesController.updateLobbyById);
+router.put('/update/:pk', auth, LobbiesController.updateLobbyById);
 
 // delete lobby
-router.delete('/delete/:pk', adminAccess, LobbiesController.deleteLobbyById);
+router.delete('/delete/:pk', auth, LobbiesController.deleteLobbyById);
 
 
 

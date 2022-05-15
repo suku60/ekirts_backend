@@ -168,5 +168,48 @@ PlayersController.deletePlayerById = async (req, res) => {
     }
 }
 
+PlayersController.deletePlayerByUserAndLobbyId = async (req, res) => {
+    console.log("deleting layer?")
+
+    let userId = req.params?.userPk
+    let lobbyId = req.params?.lobbyPk
+
+    console.log("deleting player?", "id", userId, "lobby", lobbyId)
+
+
+    try {
+        Player.findOne({
+            where: {
+                [Op.and]: [{
+                        lobbyId: {
+                            [Op.like]: lobbyId
+                        }
+                    },
+                    {
+                        userId: {
+                            [Op.like]: userId
+                        }
+                    }
+                ]
+            }
+        }).then(user => {
+            if (user) {
+                user.destroy({
+                    truncate: false
+                })
+                res.status(200).json({
+                    msg: `Player has left the lobby.`
+                });
+            } else {
+                res.status(404).json({
+                    msg: `Player could not leave lobby`
+                })
+            }
+        });
+    } catch (error) {
+        res.send(error);
+    }
+}
+
 
 module.exports = PlayersController;
