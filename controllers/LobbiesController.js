@@ -3,7 +3,7 @@ const authConfig = require('../config/auth');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const { Lobby } = require('../models/index');
+const { Lobby, Player } = require('../models/index');
 const { Op } = require('sequelize');
 
 const LobbiesController = {};
@@ -11,11 +11,10 @@ const LobbiesController = {};
 LobbiesController.createLobby = (req, res) => {
     
     let body = req.body;
-    let lobbyName = req.body.lobbyName;
-
-    let token = req.headers.authorization.split(' ')[1];
-    let { user } = jwt.decode(token, authConfig.secret);
+    let lobbyName = req.body.lobbyName
     let ownerId = req.body.ownerId
+
+    let player1Id_userId = ownerId
 
         Lobby.findAll({
             where: {
@@ -42,7 +41,19 @@ LobbiesController.createLobby = (req, res) => {
                     gameMaxMinutesTimes: body.gameMaxMinutesTimes
                 }).then(lobby => {
                     res.status(201).json({ msg: `${lobby.lobbyName} lobby has been created`, lobby: lobby });
+                    console.log("response after creating server -----------------------------:", lobby,
+                    "LOBBY IDDDDDDDDDDDDD;", lobby.id)
+
+                    Player.create({
+                        playerColor: "red",
+                        lobbyId: lobby.id,
+                        userId: ownerId
+                    })
+
                 }).catch(err => res.status(400).json({ msg: "Lobby creation failed when connecting to database. User may be trying to create a lobby without relation to himself.", error: { name: err.name, message: err.message, detail: error } }));
+
+
+                
 
             } else {
                 res.status(200).json({ msg: "Lobbyname already in use" });
