@@ -83,7 +83,7 @@ PlayersController.findPlayerByLobbyId = async (req, res) => {
                 res.send(player);
             });
     } catch (err) {
-        res.send(err)
+        res.send("error finding players", err)
     }
 }
 

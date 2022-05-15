@@ -10,15 +10,29 @@ const PlayersController = require('../controllers/PlayersController');
 router.post('/create', PlayersController.createPlayer);
 
 // read players
-router.get('/find/:pk', auth, PlayersController.findPlayerById);
-router.get('/find/lobby/:lobbyId', auth, PlayersController.findPlayerByLobbyId);
-router.get('/find/user/:userId', auth, PlayersController.findPlayerByUserId);
+router.get('/find/:pk', PlayersController.findPlayerById);
+router.get('/find/lobby/:lobbyId', PlayersController.findPlayerByLobbyId);
+router.get('/find/user/:userId', PlayersController.findPlayerByUserId);
 
 // update players
-router.put('/update/:pk', auth, PlayersController.updatePlayerById);
+router.put('/update/:pk', PlayersController.updatePlayerById);
 
 // delete player
-router.delete('/delete/:pk', auth, PlayersController.deletePlayerById);
+router.delete('/delete/:pk', PlayersController.deletePlayerById);
+
+// // create player
+// router.post('/create', PlayersController.createPlayer);
+
+// // read players
+// router.get('/find/:pk', auth, PlayersController.findPlayerById);
+// router.get('/find/lobby/:lobbyId', auth, PlayersController.findPlayerByLobbyId);
+// router.get('/find/user/:userId', auth, PlayersController.findPlayerByUserId);
+
+// // update players
+// router.put('/update/:pk', auth, PlayersController.updatePlayerById);
+
+// // delete player
+// router.delete('/delete/:pk', auth, PlayersController.deletePlayerById);
 
 
 module.exports = router;
