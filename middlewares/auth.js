@@ -4,7 +4,7 @@ const authConfig = require('../config/auth');
 module.exports = (req, res, next) => {
 
     if (!req.headers.authorization) {
-        res.status(401).json({ msg: "Unauthorized acess. You need to be logged"});
+        res.status(401).json({ msg: "Unauthorized access. You need to be logged"});
     } else {
 
         let token = req.headers.authorization.split(" ")[1];
