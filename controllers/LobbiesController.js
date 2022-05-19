@@ -32,7 +32,6 @@ LobbiesController.createLobby = (req, res) => {
         }).then(lobbiesWithSameLobbyName => {
 
             if (lobbiesWithSameLobbyName == 0) {
-
                 Lobby.create({
                     lobbyName: lobbyName,
                     ownerId: ownerId,
