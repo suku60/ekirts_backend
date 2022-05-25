@@ -49,10 +49,18 @@ PlayersController.createPlayer = async (req, res) => {
                             msg: `User wasn't able to join this lobby`
                         });
                     }
+                }).catch((err) =>
+                res.status(400).json({
+                    error: err,
                 })
+            );
             }
 
-        });
+        }).catch((err) =>
+        res.status(400).json({
+            error: err,
+        })
+    );
     } catch (err) {
         res.send(err)
     }
@@ -64,7 +72,11 @@ PlayersController.findPlayerById = async (req, res) => {
     try {
         User.findByPk(req.params.pk).then(data => {
                 res.send(data)
-            });
+            }).catch((err) =>
+            res.status(400).json({
+                error: err,
+            })
+        );
     } catch (err) {
         res.send(err);
     }
@@ -162,7 +174,11 @@ PlayersController.deletePlayerById = async (req, res) => {
                     msg: `Player id: ${id} has not been deleted.`
                 })
             }
-        });
+        }).catch((err) =>
+        res.status(400).json({
+            error: err,
+        })
+        )
     } catch (error) {
         res.send(error);
     }
