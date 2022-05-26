@@ -70,7 +70,7 @@ PlayersController.createPlayer = async (req, res) => {
 
 PlayersController.findPlayerById = async (req, res) => {
     try {
-        User.findByPk(req.params.pk).then(data => {
+        Player.findByPk(req.params.pk).then(data => {
                 res.send(data)
             }).catch((err) =>
             res.status(400).json({
@@ -152,18 +152,33 @@ PlayersController.updatePlayerById = async (req, res) => {
     }
 }
 
-PlayersController.deletePlayerById = async (req, res) => {
+PlayersController.deletePlayerByUserIdAndLobbyId = async (req, res) => {
 
-    let id = req.params.pk;
+    console.log("deletiing player....", req.params.userId, req.params.lobbyId)
+
+    let userId = req.params.userId;
+    let lobbyId = req.params.lobbyId;
 
     try {
-        Player.findOne({
+        Lobby.findOne({
             where: {
-                id: id
-            },
-        }).then(user => {
-            if (user) {
-                user.destroy({
+                [Op.and]: [
+                    {
+                        userId: {
+                            [Op.like]: userId
+                        }
+                    },
+                    {
+                        lobbyId: {
+                            [Op.like]: lobbyId
+                        }
+                    }
+                ]
+            }
+        }).then((player) => {
+            console.log("found user?", player)
+            if (player) {
+                player.destroy({
                     truncate: false
                 })
                 res.status(200).json({
@@ -182,6 +197,32 @@ PlayersController.deletePlayerById = async (req, res) => {
     } catch (error) {
         res.send(error);
     }
+}
+
+PlayersController.deletePlayerById = async (req, res) => {
+   let id = req.params.pk;
+   console.log("id=?", id)
+
+   try {
+       Player.findOne({
+           where: { id: id }
+       }).then(player => {
+           if(!player){
+               res.status(404).json({
+                   msg: "Player doesn't exist."
+               })
+           }else{
+               player.destroy({
+                   truncate: false
+               });
+               res.status(200).json({
+                msg: "Player has been deleted."
+            })
+           }
+       });
+   }catch (error) {
+       res.send(error);
+   }
 }
 
 

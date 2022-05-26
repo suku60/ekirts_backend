@@ -16,11 +16,12 @@ UsersController.logUser = (req, res) => {
     User.findOne({
 
         where: { username: username }
+
     }).then(user => {
 
         if (!user) {
 
-            res.status(400).json({ msg: "Invalid data. Incorrect username or password." });
+            res.status(400).json({ msg: "Invalid user or password." });
         } else {
 
             if (bcrypt.compareSync(password, user.password)) {
