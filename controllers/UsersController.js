@@ -16,11 +16,12 @@ UsersController.logUser = (req, res) => {
     User.findOne({
 
         where: { username: username }
+
     }).then(user => {
 
         if (!user) {
 
-            res.status(400).json({ msg: "Invalid data. Incorrect username or password." });
+            res.status(400).json({ msg: "Invalid user or password." });
         } else {
 
             if (bcrypt.compareSync(password, user.password)) {
@@ -91,7 +92,11 @@ UsersController.createUser = (req, res) => {
             } else {
                 res.status(200).json({ msg: "Username or email already in use" });
             }
-        });
+        }).catch((err) =>
+        res.status(400).json({
+            error: err,
+        })
+    );
 
     } catch (error) {
         res.status(422).json({ msg: "User creation failed.", error: { name: error.name, message: error.message, detail: error } });
@@ -114,7 +119,11 @@ UsersController.findUserByUsername = (req, res) => {
         User.findOne({ where: { username: req.body.username } })
             .then(data => {
                 res.send(data);
-            });
+            }).catch((err) =>
+            res.status(400).json({
+                error: err,
+            })
+        );
     } catch (err) {
         res.send(err)
     }
@@ -153,7 +162,11 @@ UsersController.deleteUserById = async (req, res) => {
             } else {
                 res.status(404).json({ msg: `User id: ${id} has not been deleted.` })
             }
-        });
+        }).catch((err) =>
+        res.status(400).json({
+            error: err,
+        })
+    );
     } catch (error) {
         res.send(error);
     }

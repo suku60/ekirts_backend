@@ -49,10 +49,18 @@ PlayersController.createPlayer = async (req, res) => {
                             msg: `User wasn't able to join this lobby`
                         });
                     }
+                }).catch((err) =>
+                res.status(400).json({
+                    error: err,
                 })
+            );
             }
 
-        });
+        }).catch((err) =>
+        res.status(400).json({
+            error: err,
+        })
+    );
     } catch (err) {
         res.send(err)
     }
@@ -62,9 +70,13 @@ PlayersController.createPlayer = async (req, res) => {
 
 PlayersController.findPlayerById = async (req, res) => {
     try {
-        User.findByPk(req.params.pk).then(data => {
+        Player.findByPk(req.params.pk).then(data => {
                 res.send(data)
-            });
+            }).catch((err) =>
+            res.status(400).json({
+                error: err,
+            })
+        );
     } catch (err) {
         res.send(err);
     }
@@ -140,18 +152,33 @@ PlayersController.updatePlayerById = async (req, res) => {
     }
 }
 
-PlayersController.deletePlayerById = async (req, res) => {
+PlayersController.deletePlayerByUserIdAndLobbyId = async (req, res) => {
 
-    let id = req.params.pk;
+    console.log("deletiing player....", req.params.userId, req.params.lobbyId)
+
+    let userId = req.params.userId;
+    let lobbyId = req.params.lobbyId;
 
     try {
-        Player.findOne({
+        Lobby.findOne({
             where: {
-                id: id
-            },
-        }).then(user => {
-            if (user) {
-                user.destroy({
+                [Op.and]: [
+                    {
+                        userId: {
+                            [Op.like]: userId
+                        }
+                    },
+                    {
+                        lobbyId: {
+                            [Op.like]: lobbyId
+                        }
+                    }
+                ]
+            }
+        }).then((player) => {
+            console.log("found user?", player)
+            if (player) {
+                player.destroy({
                     truncate: false
                 })
                 res.status(200).json({
@@ -162,53 +189,40 @@ PlayersController.deletePlayerById = async (req, res) => {
                     msg: `Player id: ${id} has not been deleted.`
                 })
             }
-        });
+        }).catch((err) =>
+        res.status(400).json({
+            error: err,
+        })
+        )
     } catch (error) {
         res.send(error);
     }
 }
 
-PlayersController.deletePlayerByUserAndLobbyId = async (req, res) => {
-    console.log("deleting layer?")
+PlayersController.deletePlayerById = async (req, res) => {
+   let id = req.params.pk;
+   console.log("id=?", id)
 
-    let userId = req.params?.userPk
-    let lobbyId = req.params?.lobbyPk
-
-    console.log("deleting player?", "id", userId, "lobby", lobbyId)
-
-
-    try {
-        Player.findOne({
-            where: {
-                [Op.and]: [{
-                        lobbyId: {
-                            [Op.like]: lobbyId
-                        }
-                    },
-                    {
-                        userId: {
-                            [Op.like]: userId
-                        }
-                    }
-                ]
-            }
-        }).then(user => {
-            if (user) {
-                user.destroy({
-                    truncate: false
-                })
-                res.status(200).json({
-                    msg: `Player has left the lobby.`
-                });
-            } else {
-                res.status(404).json({
-                    msg: `Player could not leave lobby`
-                })
-            }
-        });
-    } catch (error) {
-        res.send(error);
-    }
+   try {
+       Player.findOne({
+           where: { id: id }
+       }).then(player => {
+           if(!player){
+               res.status(404).json({
+                   msg: "Player doesn't exist."
+               })
+           }else{
+               player.destroy({
+                   truncate: false
+               });
+               res.status(200).json({
+                msg: "Player has been deleted."
+            })
+           }
+       });
+   }catch (error) {
+       res.send(error);
+   }
 }
 
 

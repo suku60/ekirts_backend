@@ -18,8 +18,7 @@ router.get('/find/user/:userId', auth, PlayersController.findPlayerByUserId);
 router.put('/update/:pk', auth, PlayersController.updatePlayerById);
 
 // delete player
-router.delete('/delete/:pk', auth, PlayersController.deletePlayerById);
-router.delete('/delete/:userPk/:lobbyPk', auth, PlayersController.deletePlayerByUserAndLobbyId);
-
+router.delete('/:userId/:lobbyId', auth, PlayersController.deletePlayerByUserIdAndLobbyId);
+router.delete('/:pk', auth, PlayersController.deletePlayerById);
 
 module.exports = router;

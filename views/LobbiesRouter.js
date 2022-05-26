@@ -19,8 +19,6 @@ router.get('/findAvailable', auth, LobbiesController.findAvailableLobbies);
 router.put('/update/:pk', auth, LobbiesController.updateLobbyById);
 
 // delete lobby
-router.delete('/delete/:pk', auth, LobbiesController.deleteLobbyById);
-
-
+router.delete('/delete/:pk', auth, adminAccess, LobbiesController.deleteLobbyById);
 
 module.exports = router;

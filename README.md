@@ -1,33 +1,121 @@
+<div align=center>
+
 ## Ekirts videogame backend.
 
-<!-- {
-  "msg": "juanma666 has joined the game",
-  "user": {
-    "id": 1,
-    "email": "juanma@gmail.com",
-    "username": "juanma666",
-    "birthdate": "1000-01-01T00:14:44.000Z",
-    "password": "$2b$10$W.aGUlLSGNOJXZmn5jGH..oyFlyhT9fqVBZrrNy0TX2ImYOzzOiyO",
-    "updatedAt": "2022-05-12T20:56:13.479Z",
-    "createdAt": "2022-05-12T20:56:13.479Z"
-  }
-  {
-  "message": "Welcome juanma666",
-  "user": {
-    "id": 1,
-    "name": null,
-    "birthdate": "1000-01-01T00:14:44.000Z",
-    "email": "juanma@gmail.com",
-    "username": "juanma666",
-    "password": "$2b$10$W.aGUlLSGNOJXZmn5jGH..oyFlyhT9fqVBZrrNy0TX2ImYOzzOiyO",
-    "trophies": 0,
-    "banned": false,
-    "lobbyCreationRestricted": false,
-    "adminAccess": false,
-    "adminUser": false,
-    "createdAt": "2022-05-12T20:56:13.000Z",
-    "updatedAt": "2022-05-12T20:56:13.000Z"
-  },
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjpudWxsLCJiaXJ0aGRhdGUiOiIxMDAwLTAxLTAxVDAwOjE0OjQ0LjAwMFoiLCJlbWFpbCI6Imp1YW5tYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6Imp1YW5tYTY2NiIsInBhc3N3b3JkIjoiJDJiJDEwJFcuYUdVbExTR05PSlhabW41akdILi5veUZseWhUOWZxVkJacnJOeTBUWDJJbVlPenpPaXlPIiwidHJvcGhpZXMiOjAsImJhbm5lZCI6ZmFsc2UsImxvYmJ5Q3JlYXRpb25SZXN0cmljdGVkIjpmYWxzZSwiYWRtaW5BY2Nlc3MiOmZhbHNlLCJhZG1pblVzZXIiOmZhbHNlLCJjcmVhdGVkQXQiOiIyMDIyLTA1LTEyVDIwOjU2OjEzLjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIyLTA1LTEyVDIwOjU2OjEzLjAwMFoifSwiaWF0IjoxNjUyMzg5MDQyLCJleHAiOjE2NTI0NzU0NDJ9.VKuWKvBOmffqUhJZrHRmVLBGpcU3dUoQXCJwqKT4t8k"
-}
-} -->
+---
+
+<img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white">
+<img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white">
+
+---
+
+This project is a complete backend for my first webgame. Here you'll find the basic CRUD for every endpoint, aswell as it's characteristics. 
+This is a Rest API with a mySql database and we're using libreries such as sequelize and express to create our server. 
+
+---
+
+#### How to run 
+
+clone this repository. Open a console and type
+
+```git clone https://github.com/suku60/ekirts_backend```
+
+or download the files. 
+
+then, type 
+```npm init```
+
+this will install all needed dependencies. 
+
+```npm run dev```
+server will be running as default in port 8888.
+
+</div>
+
+---
+
+#### Endpoints 
+
+
+##### Users
+
+- Login 
+  
+```router.post('/login', UsersController.logUser);```
+
+
+- Create users:
+
+```router.post('/create', UsersController.createUser);```
+
+- Read users:
+  
+```router.get('/find/:pk', auth, UsersController.findUserById);```
+
+```router.get('/find', auth, UsersController.findUserByUsername);```
+
+
+- Update users:
+  
+```router.put('/update/:pk', auth, UsersController.updateUserById);```
+
+```router.put('/update/status/:username', auth, adminAccess, UsersController.updateUserStatus);```
+
+- Delete users:
+```router.delete('/delete/:pk', auth, adminAccess, UsersController.deleteUserById);```
+
+
+##### Lobbies
+
+- Create lobbies:
+
+```router.post('/create', auth, LobbiesController.createLobby);```
+
+
+- Read lobbies:
+
+```router.get('/find/:pk', auth, LobbiesController.findLobbyById);```
+
+```router.get('/find/owner/:pk', auth, LobbiesController.findLobbyByOwnerId);```
+
+```router.get('/findActive', auth, LobbiesController.findActiveLobbies);```
+
+```router.get('/findAvailable', auth, LobbiesController.findAvailableLobbies);```
+
+- Update lobbies:
+  
+```router.put('/update/:pk', auth, LobbiesController.updateLobbyById);```
+
+
+- Delete lobbies:
+```router.delete('/delete/:pk', auth, adminAccess, LobbiesController.deleteLobbyById);```
+
+
+##### Players
+
+- Create players:
+
+```router.post('/create', PlayersController.createPlayer);```
+
+
+- Read players:
+
+```router.get('/find/:pk', PlayersController.findPlayerById);```
+
+```router.get('/find/lobby/:lobbyId', PlayersController.findPlayerByLobbyId);```
+
+```router.get('/find/user/:userId', PlayersController.findPlayerByUserId);```
+
+- Update players:
+  
+```router.put('/update/:pk', PlayersController.updatePlayerById);```
+
+
+- Delete players:
+```router.delete('/delete/:pk', PlayersController.deletePlayerById);```
+
+
+
+
+

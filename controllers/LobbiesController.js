@@ -16,23 +16,13 @@ LobbiesController.createLobby = (req, res) => {
 
     let player1Id_userId = ownerId
 
-        Lobby.findAll({
+        Lobby.findOne({
             where: {
-
-                [Op.or]: [
-                    {
-                        lobbyName: {
-                            [Op.like]: lobbyName
-                        }
-                    }
-                ]
-
-            }
-
+                lobbyName: lobbyName,
+                   },
         }).then(lobbiesWithSameLobbyName => {
 
-            if (lobbiesWithSameLobbyName == 0) {
-
+            if (!lobbiesWithSameLobbyName) {
                 Lobby.create({
                     lobbyName: lobbyName,
                     ownerId: ownerId,
@@ -41,8 +31,6 @@ LobbiesController.createLobby = (req, res) => {
                     gameMaxMinutesTimes: body.gameMaxMinutesTimes
                 }).then(lobby => {
                     res.status(201).json({ msg: `${lobby.lobbyName} lobby has been created`, lobby: lobby });
-                    console.log("response after creating server -----------------------------:", lobby,
-                    "LOBBY IDDDDDDDDDDDDD;", lobby.id)
 
                     Player.create({
                         playerColor: "red",
@@ -51,15 +39,12 @@ LobbiesController.createLobby = (req, res) => {
                     })
 
                 }).catch(err => res.status(400).json({ msg: "Lobby creation failed when connecting to database. User may be trying to create a lobby without relation to himself.", error: { name: err.name, message: err.message, detail: error } }));
-
-
-                
-
             } else {
                 res.status(200).json({ msg: "Lobbyname already in use" });
             }
         });
 }
+
 
 // we're doing an update to lobby when it is full
 
@@ -77,6 +62,7 @@ LobbiesController.findLobbyById = (req, res) => {
 LobbiesController.findLobbyByOwnerId = (req, res) => {
 
     let ownerId = req.params.pk
+
     try {
         Lobby.findAll({ where: { ownerId: ownerId } })
             .then(data => {
@@ -88,12 +74,15 @@ LobbiesController.findLobbyByOwnerId = (req, res) => {
 }
 
 LobbiesController.findActiveLobbies = (req, res) => {
+
     try {
+
         Lobby.findAll({ where: { inactive: 0 } })
         
             .then(data => {
                 res.send(data);
             });
+
     } catch (err) {
         res.send(err)
     }
@@ -118,9 +107,15 @@ LobbiesController.findAvailableLobbies = async (req, res) => {
                 ]
             }
         }).then(data => {
-            console.log("data we send as available:", data)
+
                 res.send(data);
-            });
+
+            })
+            .catch((err) =>
+                res.status(400).json({
+                    error: err,
+                    })
+            );
     } catch (err) {
         res.send(err)
     }
@@ -159,7 +154,11 @@ LobbiesController.deleteLobbyById = async (req, res) => {
             } else {
                 res.status(404).json({ msg: `Lobby id: ${id} has not been deleted.` })
             }
-        });
+        }).catch((err) =>
+        res.status(400).json({
+            error: err,
+        })
+    );
     } catch (error) {
         res.send(error);
     }
