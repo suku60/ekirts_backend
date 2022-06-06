@@ -2,10 +2,10 @@ require('dotenv').config();
 
 module.exports = {
   "development": {
-    "username": "bc7aa68a4e7763",
-    "password": "f718d98a",
-    "database": "ekirts_backend_production",
-    "host": "us-cdbr-east-05.cleardb.net",
+    "username": "root",
+    "password": "1234",
+    "database": "ekirts_backend",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
@@ -16,10 +16,10 @@ module.exports = {
     "dialect": "mysql"
   },
   "production": {
-    "username": "bc7aa68a4e7763",
-    "password": "f718d98a",
+    "username": "admin_production",
+    "password": "1234",
     "database": "ekirts_backend_production",
-    "host": "us-cdbr-east-05.cleardb.net",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   }
 }
