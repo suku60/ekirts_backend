@@ -154,8 +154,6 @@ PlayersController.updatePlayerById = async (req, res) => {
 
 PlayersController.deletePlayerByUserIdAndLobbyId = async (req, res) => {
 
-    console.log("deletiing player....", req.params.userId, req.params.lobbyId)
-
     let userId = req.params.userId;
     let lobbyId = req.params.lobbyId;
 
@@ -176,7 +174,6 @@ PlayersController.deletePlayerByUserIdAndLobbyId = async (req, res) => {
                 ]
             }
         }).then((player) => {
-            console.log("found user?", player)
             if (player) {
                 player.destroy({
                     truncate: false
@@ -201,7 +198,6 @@ PlayersController.deletePlayerByUserIdAndLobbyId = async (req, res) => {
 
 PlayersController.deletePlayerById = async (req, res) => {
    let id = req.params.pk;
-   console.log("id=?", id)
 
    try {
        Player.findOne({

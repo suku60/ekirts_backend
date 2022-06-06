@@ -21,7 +21,7 @@ router.put('/update/:pk', auth, UsersController.updateUserById);
 // router.put('/update/status/:username', auth, adminAccess, UsersController.updateUserStatus);
 
 // delete user
-router.delete('/delete/:pk', auth, adminAccess, UsersController.deleteUserById);
+router.delete('/delete/:pk', auth, UsersController.deleteUserById);
 
 
 module.exports = router;
