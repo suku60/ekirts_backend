@@ -8,7 +8,7 @@ const sequelize = new Sequelize(
     process.env.MYSQL_DATABASE || config.development.database,
     process.env.MYSQL_USER || config.development.username,
     process.env.MYSQL_PASSWORD || config.development.password, {
-        host: process.env.MYSQL_HOST || config.development.host,
+        host: process.env.MYSQL_HOST,
         port: process.env.MYSQL_PORT || config.development.port || '3306',
         dialect: 'mysql',
         operatorAliases: false,
@@ -23,6 +23,6 @@ const sequelize = new Sequelize(
 
 module.exports = sequelize.authenticate()
     .then((db) => {
-        
+        console.log(process.env.MYSQL_HOST)
         return db;
     });
