@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const cors = require('cors');
 const db = require('./db.js');
-// const PORT = process.env.PORT || 8888
+const PORT = process.env.PORT || 8888
+const HOST = process.env.HOST || '0.0.0.0';
 const router = require('./router');
 
 // Creating cors options
@@ -19,7 +20,7 @@ app.use(cors(corsConfig));
 app.use(router);
 
 db.then(() => {
-        app.listen(process.env.PORT || 5000, () => 
-        console.log(`Server on port ${PORT}`));
+        app.listen(PORT, HOST, () => 
+        console.log(`Server on port ${process.env.PORT}, host ${process.env.HOST}`));
     })
     .catch((err) => console.log(err.message));
