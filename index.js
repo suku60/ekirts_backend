@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require('cors');
 const db = require('./db.js');
-const PORT = process.env.PORT || 8888
+const PORT = process.env.PORT || 8888;
 const HOST = process.env.HOST || '0.0.0.0' || '127.0.0.1';
 const router = require('./router');
 
