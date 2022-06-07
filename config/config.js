@@ -16,10 +16,10 @@ module.exports = {
     "dialect": "mysql"
   },
   "production": {
-    "username": "admin_production",
-    "password": "1234",
-    "database": "ekirts_backend_production",
-    "host": "127.0.0.1",
+    "username": "bj3ses19tupwslgo",
+    "password": "hyjcfcuzmf5z54w4",
+    "database": "x1fidtjdv3dvjf5m",
+    "host": "cxmgkzhk95kfgbq4.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   }
 }
