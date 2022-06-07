@@ -19,7 +19,7 @@ app.use(cors(corsConfig));
 app.use(router);
 
 db.then(() => {
-        app.listen(process.env.PORT || 8888, () => 
+        app.listen(process.env.PORT || 5000, () => 
         console.log(`Server on port ${PORT}`));
     })
     .catch((err) => console.log(err.message));
